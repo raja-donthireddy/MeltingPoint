@@ -100,7 +100,7 @@ Everything runs in the browser. After the page loads, it makes no network reques
 - **Display rules.** Displayed Values are rounded to 2 decimal places for display only, written with a space before the unit symbol, and shown without a sign when they round to zero.
 - **Role by last edit.** The Field the User last typed in is the Source Field. Typing in the other Field swaps the roles, and the new Converted Field's content is replaced.
 - **State and binding.** State is held in Angular signals bound directly to the two Fields, with no forms library and no RxJS beyond what Angular itself uses, as `Technical-Context.MD` requires.
-- **Feedback in the page only.** Validation Messages are inline, and Converted Values are announced through a polite live region. There are no toasts, dialogs or notifications.
+- **Feedback in the page only.** Validation Messages are inline, and Converted Values and Validation Messages are announced through a polite live region. There are no toasts, dialogs or notifications.
 - **No new runtime dependencies.** No UI kits, CSS frameworks, unit libraries, analytics or error-tracking SDKs. Adding any runtime dependency needs an ADR.
 
 ## Testing Decisions

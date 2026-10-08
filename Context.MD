@@ -27,7 +27,7 @@ The scale a Temperature is measured in: Celsius or Fahrenheit, and nothing else.
 ### Fields and values
 
 **Blank State**:
-Both Fields empty, with no Source Field, no Converted Value and no Validation Message. The page opens in the Blank State, and returns to it whenever the User empties the Source Field. It is not an Invalid Input.
+Both Fields empty or holding only whitespace, with no Source Field, no Converted Value and no Validation Message. The page opens in the Blank State, and returns to it whenever the User empties the Source Field or leaves only whitespace in it. Whitespace the User typed stays in the Field as typed. It is not an Invalid Input.
 
 **Celsius Field**:
 The Field that holds the Temperature in Celsius. It is the Source Field when the User last typed in it, and otherwise the Converted Field.
@@ -48,7 +48,7 @@ The Field that holds the Temperature in Fahrenheit. It is the Source Field when 
 One of exactly two linked, labelled inputs: the Celsius Field and the Fahrenheit Field. Either Field can be typed in. Typing in one makes it the Source Field and the other the Converted Field.
 
 **Live Update**:
-The Converted Value is recalculated on every change to the Source Value, with no Convert action. A Live Update replaces the Converted Field's content, or clears it when the Source Value becomes an Invalid Input or empty.
+The Converted Value is recalculated on every change to the Source Value, with no Convert action. A Live Update replaces the Converted Field's content, or clears it when the Source Value becomes an Invalid Input, empty or only whitespace.
 
 **Source Field**:
 The Field the User last typed in; in the Blank State there is none. It is a role, not a fixed Field: either Field becomes the Source Field when typed in.
@@ -59,7 +59,7 @@ Exactly what the User has typed into the Source Field, before any Conversion. A 
 ### Validity
 
 **Invalid Input**:
-A non-empty Source Value that cannot be converted: not a number, below Absolute Zero, or longer than 7 digits before the decimal point or 2 digits after it. An empty Field is the Blank State, not an Invalid Input. A number is an optional sign, digits and an optional decimal point written as a full stop, ignoring surrounding spaces; a decimal comma, a thousands separator, scientific notation and a lone sign are not numbers. An Invalid Input produces a Validation Message and no Converted Value. It is never shown as NaN.
+A Source Value holding more than whitespace that cannot be converted: not a number, below Absolute Zero, or longer than 7 digits before the decimal point or 2 digits after it. An empty Field, or one holding only whitespace, is the Blank State, not an Invalid Input. A number is an optional sign, digits and an optional decimal point written as a full stop, ignoring surrounding spaces; a decimal comma, a thousands separator, scientific notation and a lone sign are not numbers. An Invalid Input produces a Validation Message and no Converted Value. It is never shown as NaN.
 
 **Validation Message**:
 The plain, terse text shown beside the Source Field when its Source Value is an Invalid Input, for example "Enter a number." It names what is wrong in the User's terms. It is not a pop-up, a toast or an error code.
