@@ -56,7 +56,7 @@ Exactly what the User has typed into the Source Field, before any Conversion. A 
 ### Validity
 
 **Invalid Input**:
-A Source Value that cannot be converted: empty, not a number, or below Absolute Zero. An Invalid Input produces a Validation Message and no Converted Value. It is never shown as NaN.
+A Source Value that cannot be converted: empty, not a number, or below Absolute Zero. A number is an optional sign, digits and an optional decimal point written as a full stop, ignoring surrounding spaces; a decimal comma, a thousands separator, scientific notation and a lone sign are not numbers. An Invalid Input produces a Validation Message and no Converted Value. It is never shown as NaN.
 
 **Validation Message**:
 The plain, terse text shown beside the Source Field when its Source Value is an Invalid Input, for example "Enter a number." It names what is wrong in the User's terms. It is not a pop-up, a toast or an error code.
@@ -65,3 +65,7 @@ The plain, terse text shown beside the Source Field when its Source Value is an 
 
 **User**:
 An anonymous person converting a Temperature in a web browser. A User has no account, login or session, and nothing about a User is stored or sent anywhere.
+
+## Flagged ambiguities
+
+- "37,5" could be read as a decimal comma or a thousands separator. Resolved: the decimal point is a full stop only, and a comma in a Source Value makes it an Invalid Input.
