@@ -69,6 +69,22 @@ The plain, terse text shown beside the Source Field when its Source Value is an 
 **User**:
 An anonymous person converting a Temperature in a web browser. A User has no account, login or session, and nothing about a User is stored or sent anywhere.
 
+## Relationships
+
+- A **Temperature** has exactly one **Unit**.
+- There are exactly two **Fields**; at most one is the **Source Field**, and the other is then the **Converted Field**.
+- A valid **Source Value** has exactly one **Converted Value**, shown as a **Displayed Value**.
+- An **Invalid Input** has exactly one **Validation Message** and no **Converted Value**.
+- The **Blank State** has no **Source Field**, no **Converted Value** and no **Validation Message**.
+
+## Example dialogue
+
+> **Dev:** "The User types 100 into the **Fahrenheit Field**, then deletes it. Do we show 'Enter a number.'?"
+> **Domain expert:** "No. An emptied **Source Field** returns the page to the **Blank State**: both **Fields** empty, no **Validation Message**."
+> **Dev:** "And if they type 37,5 into the **Celsius Field**?"
+> **Domain expert:** "That is an **Invalid Input**: the decimal point is a full stop only. The **Celsius Field** shows a **Validation Message** and the **Fahrenheit Field** is empty."
+
 ## Flagged ambiguities
 
 - "37,5" could be read as a decimal comma or a thousands separator. Resolved: the decimal point is a full stop only, and a comma in a Source Value makes it an Invalid Input.
+- "Empty" was treated as an Invalid Input. Resolved: an empty Field is the Blank State and shows no Validation Message.
