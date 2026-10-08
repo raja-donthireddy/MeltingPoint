@@ -51,4 +51,13 @@ Authority order (earlier wins): **ADR > Technical-Context > Context.MD > Spec > 
 
 <!-- TODO(init): fill once the stack is chosen — install / test tiers / run.
      Written by /factory-init-tech-context or the first feature build. -->
-_Dev commands not set yet — filled when the stack is chosen (`/factory-init-tech-context`)._   <!-- filled per-product at init: install / test tiers / run -->
+Stack: Angular 22 (zoneless, signals) · Node.js 24 LTS · npm, exact-pinned. See `Technical-Context.MD`.
+Commands below take effect once the app is scaffolded:
+
+- Install: `npm ci`
+- Run (local): `npm start` (`ng serve`)
+- Lint / format: `npm run lint` · `npm run format:check`
+- Tier 1 (unit + component, Vitest): `npm test`
+- Build (static `dist/`): `npm run build`
+- Tier 2 (Playwright + axe, Chromium/Firefox/WebKit, against the build): `npm run e2e`
+- Enable hooks once per clone: `git config core.hooksPath .githooks`
