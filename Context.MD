@@ -26,17 +26,20 @@ The scale a Temperature is measured in: Celsius or Fahrenheit, and nothing else.
 
 ### Fields and values
 
+**Blank State**:
+Both Fields empty, with no Source Field, no Converted Value and no Validation Message. The page opens in the Blank State, and returns to it whenever the User empties the Source Field. It is not an Invalid Input.
+
 **Celsius Field**:
 The Field that holds the Temperature in Celsius. It is the Source Field when the User last typed in it, and otherwise the Converted Field.
 
 **Converted Field**:
-The Field the User did not last type in. It shows the Converted Value, or is empty while the Source Value is an Invalid Input. It is a role, not a fixed Field.
+The Field the User did not last type in. It shows the Converted Value, or is empty while the Source Value is an Invalid Input or in the Blank State. It is a role, not a fixed Field.
 
 **Converted Value**:
 The result of a Conversion of a valid Source Value, shown in the Converted Field as a Displayed Value. A Converted Value exists only while the Source Value is valid; it is never a stale result kept from earlier input.
 
 **Displayed Value**:
-A Converted Value as the User sees it: rounded to 2 decimal places, with a space before the unit symbol, for example 98.60 °F. The Displayed Value is presentation only; the Conversion behind it is exact. The Source Value is never rewritten as a Displayed Value.
+A Converted Value as the User sees it: rounded to 2 decimal places, with a space before the unit symbol, for example 98.60 °F. A Displayed Value that rounds to zero carries no sign: 0.00 °C, never -0.00 °C. The Displayed Value is presentation only; the Conversion behind it is exact. The Source Value is never rewritten as a Displayed Value.
 
 **Fahrenheit Field**:
 The Field that holds the Temperature in Fahrenheit. It is the Source Field when the User last typed in it, and otherwise the Converted Field.
@@ -45,10 +48,10 @@ The Field that holds the Temperature in Fahrenheit. It is the Source Field when 
 One of exactly two linked, labelled inputs: the Celsius Field and the Fahrenheit Field. Either Field can be typed in. Typing in one makes it the Source Field and the other the Converted Field.
 
 **Live Update**:
-The Converted Value is recalculated on every change to the Source Value, with no Convert action. A Live Update replaces the Converted Field's content, or clears it when the Source Value becomes an Invalid Input.
+The Converted Value is recalculated on every change to the Source Value, with no Convert action. A Live Update replaces the Converted Field's content, or clears it when the Source Value becomes an Invalid Input or empty.
 
 **Source Field**:
-The Field the User last typed in. It is a role, not a fixed Field: either Field becomes the Source Field when typed in.
+The Field the User last typed in; in the Blank State there is none. It is a role, not a fixed Field: either Field becomes the Source Field when typed in.
 
 **Source Value**:
 Exactly what the User has typed into the Source Field, before any Conversion. A Source Value is either a valid Temperature or an Invalid Input.
@@ -56,7 +59,7 @@ Exactly what the User has typed into the Source Field, before any Conversion. A 
 ### Validity
 
 **Invalid Input**:
-A Source Value that cannot be converted: empty, not a number, or below Absolute Zero. An Invalid Input produces a Validation Message and no Converted Value. It is never shown as NaN.
+A non-empty Source Value that cannot be converted: not a number, below Absolute Zero, or longer than 7 digits before the decimal point or 2 digits after it. An empty Field is the Blank State, not an Invalid Input. A number is an optional sign, digits and an optional decimal point written as a full stop, ignoring surrounding spaces; a decimal comma, a thousands separator, scientific notation and a lone sign are not numbers. An Invalid Input produces a Validation Message and no Converted Value. It is never shown as NaN.
 
 **Validation Message**:
 The plain, terse text shown beside the Source Field when its Source Value is an Invalid Input, for example "Enter a number." It names what is wrong in the User's terms. It is not a pop-up, a toast or an error code.
@@ -65,3 +68,23 @@ The plain, terse text shown beside the Source Field when its Source Value is an 
 
 **User**:
 An anonymous person converting a Temperature in a web browser. A User has no account, login or session, and nothing about a User is stored or sent anywhere.
+
+## Relationships
+
+- A **Temperature** has exactly one **Unit**.
+- There are exactly two **Fields**; at most one is the **Source Field**, and the other is then the **Converted Field**.
+- A valid **Source Value** has exactly one **Converted Value**, shown as a **Displayed Value**.
+- An **Invalid Input** has exactly one **Validation Message** and no **Converted Value**.
+- The **Blank State** has no **Source Field**, no **Converted Value** and no **Validation Message**.
+
+## Example dialogue
+
+> **Dev:** "The User types 100 into the **Fahrenheit Field**, then deletes it. Do we show 'Enter a number.'?"
+> **Domain expert:** "No. An emptied **Source Field** returns the page to the **Blank State**: both **Fields** empty, no **Validation Message**."
+> **Dev:** "And if they type 37,5 into the **Celsius Field**?"
+> **Domain expert:** "That is an **Invalid Input**: the decimal point is a full stop only. The **Celsius Field** shows a **Validation Message** and the **Fahrenheit Field** is empty."
+
+## Flagged ambiguities
+
+- "37,5" could be read as a decimal comma or a thousands separator. Resolved: the decimal point is a full stop only, and a comma in a Source Value makes it an Invalid Input.
+- "Empty" was treated as an Invalid Input. Resolved: an empty Field is the Blank State and shows no Validation Message.
