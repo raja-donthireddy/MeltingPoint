@@ -35,14 +35,14 @@ The running app depends on no external service.
 ## Packages in use
 **UI / state:** `@angular/core` signals (`signal`, `computed`) bound directly to the two `<input>`s. No forms library; no RxJS beyond what Angular itself depends on.
 **Unit & component tests (Tier 1):** Vitest (Angular's default test runner).
-**Browser tests (Tier 2/3):** Playwright on Chromium, Firefox and WebKit.
+**Browser tests (Tier 2/3):** Playwright on Chromium, Firefox and WebKit. `http-server` serves the production build to Tier 2; it is a dev-only test tool and is never shipped.
 **Accessibility:** `@axe-core/playwright`, run inside the Playwright suite.
 **Lint / format:** `angular-eslint`, Prettier.
 **Not allowed:** UI component kits (Angular Material, PrimeNG, …), CSS frameworks, number/units libraries, analytics or error-tracking SDKs. Any new runtime dependency needs an ADR.
 
 ## Toolchain pinning
 - Policy: **exact-pinned.**
-- Pinned tools: Node.js 24 LTS via `.nvmrc` and `package.json` `engines.node`; npm via `package.json` `packageManager`; every npm dependency (Angular, TypeScript, Vitest, Playwright, ESLint, Prettier, …) at an exact version with `save-exact=true` in `.npmrc`; `package-lock.json` committed; CI installs with `npm ci` only.
+- Pinned tools: Node.js 24 LTS, at 24.15.0 or later (the floor Angular CLI 22 requires), via `.nvmrc`, `package.json` `engines.node` and `package.json` `devEngines.runtime`; npm via `package.json` `devEngines.packageManager`, the npm that ships with that Node. Both `devEngines` entries set `onFail: "error"`, so `npm install`, `npm ci` and `npm run` fail on any other Node or npm; `packageManager` alone is not enforced by npm; every npm dependency (Angular, TypeScript, Vitest, Playwright, ESLint, Prettier, …) at an exact version with `save-exact=true` in `.npmrc`; `package-lock.json` committed; CI installs with `npm ci` only.
 - Bumping: one PR per bump. Angular upgrades go through `ng update`, and Angular and TypeScript move together. A bump merges only with Tier 1 and Tier 2 green.
 
 ## Instrumentation
@@ -53,7 +53,7 @@ The running app depends on no external service.
 
 ## User Feedback Approach
 - Channel: in-page only — no email, notifications, toasts or pop-ups.
-- The converted value updates live as the user types (no Convert button) and is announced to screen readers through an `aria-live="polite"` region.
+- The converted value updates live as the user types (no Convert button) and is announced to screen readers through an `aria-live="polite"` region, which also announces the Validation Message while the input is invalid.
 - Validation is inline beside the field, in plain, terse language — e.g. "Enter a number." / "Below absolute zero (−273.15 °C)." No error codes, no exclamation marks.
 - Copy is UK English, sentence case, with a space before unit symbols and 2 decimal places: `37.00 °C`, `98.60 °F`.
 
