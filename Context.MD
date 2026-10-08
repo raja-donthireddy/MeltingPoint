@@ -36,7 +36,7 @@ The Field the User did not last type in. It shows the Converted Value, or is emp
 The result of a Conversion of a valid Source Value, shown in the Converted Field as a Displayed Value. A Converted Value exists only while the Source Value is valid; it is never a stale result kept from earlier input.
 
 **Displayed Value**:
-A Converted Value as the User sees it: rounded to 2 decimal places, with a space before the unit symbol, for example 98.60 °F. The Displayed Value is presentation only; the Conversion behind it is exact. The Source Value is never rewritten as a Displayed Value.
+A Converted Value as the User sees it: rounded to 2 decimal places, with a space before the unit symbol, for example 98.60 °F. A Displayed Value that rounds to zero carries no sign: 0.00 °C, never -0.00 °C. The Displayed Value is presentation only; the Conversion behind it is exact. The Source Value is never rewritten as a Displayed Value.
 
 **Fahrenheit Field**:
 The Field that holds the Temperature in Fahrenheit. It is the Source Field when the User last typed in it, and otherwise the Converted Field.
