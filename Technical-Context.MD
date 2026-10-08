@@ -17,7 +17,7 @@ Every later section of this contract is written for the Operating Context stated
 ## Overriding Principles
 1. **No server calls at runtime.** All conversion happens in the browser; after the page loads it makes no network requests — no fetch/XHR, no analytics beacons, no third-party scripts or fonts from a CDN. This is the Product's defining constraint.
 2. **Conversion logic is pure and separate from the UI.** `toFahrenheit` and `toCelsius` are side-effect-free functions in their own module, unit-tested on their own. Components only bind to them.
-3. **Every input has defined, correct handling.** Exact formulas (°F = °C × 9/5 + 32; °C = (°F − 32) × 5/9). Empty or non-numeric input shows a clear message, never `NaN`. Values below absolute zero (−273.15 °C / −459.67 °F) are rejected. Results are rounded to 2 decimal places for display only — never in the calculation.
+3. **Every input has defined, correct handling.** Exact formulas (°F = °C × 9/5 + 32; °C = (°F − 32) × 5/9). Non-numeric input shows a clear message, never `NaN`; an empty field is a blank state and shows no message. Values below absolute zero (−273.15 °C / −459.67 °F) are rejected. Results are rounded to 2 decimal places for display only — never in the calculation.
 4. **Accessible by default.** Every input is labelled, the page is fully keyboard-operable, and it meets WCAG 2.2 AA contrast.
 
 ## Frameworks
