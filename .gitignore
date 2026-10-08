@@ -24,5 +24,12 @@ diff_output.txt
 scratch.txt
 dump.txt
 
-# Stack-specific ignores (Python/.NET/Node/etc.) are added once the stack is
-# chosen -- see /factory-init-tech-context.
+# Node / Angular
+node_modules/
+dist/
+.angular/
+coverage/
+test-results/
+playwright-report/
+.env
+.env.*

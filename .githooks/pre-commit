@@ -52,4 +52,11 @@ if [ "${#blocked[@]}" -gt 0 ]; then
   exit 1
 fi
 
+# Lint + format gate (Technical-Context.MD -> Git Guardrails). Active once the
+# Angular app is scaffolded and package.json exists.
+if [ -f package.json ]; then
+  npm run --silent lint || { echo "pre-commit: lint failed." >&2; exit 1; }
+  npm run --silent format:check || { echo "pre-commit: formatting check failed (run: npm run format)." >&2; exit 1; }
+fi
+
 exit 0
